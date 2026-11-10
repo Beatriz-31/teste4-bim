@@ -1,0 +1,13 @@
+
+"""Cria um usuário com senha em hash.
+Uso: python criar_usuario.py "Nome" email@exemplo.com senha admin|usuario"""
+import sys
+from app.config import Config
+from app.database import Database
+from app.usuario import UsuarioRepositorio
+
+if len(sys.argv) != 5 or sys.argv[4] not in ("admin", "usuario"):
+    sys.exit(__doc__)
+nome, email, senha, tipo = sys.argv[1:]
+UsuarioRepositorio(Database(Config)).criar(nome, email.lower(), senha, tipo)
+print("Usuário criado:", email, "(%s)" % tipo)
